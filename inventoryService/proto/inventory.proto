@@ -1,0 +1,296 @@
+syntax = "proto3";
+
+package inventory;
+
+option go_package = "proto/inventory";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+message Product {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string category_id = 4;
+  double price = 5;
+  string sku = 6;
+}
+
+message Category {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+}
+
+message InventoryItem {
+  string id = 1;
+  string product_id = 2;
+  string warehouse_id = 3;
+  int32 quantity = 4;
+  int32 reorder_level = 5;
+  int32 reorder_quantity = 6;
+}
+
+message Warehouse {
+  string id = 1;
+  string name = 2;
+  string location = 3;
+}
+
+message Supplier {
+  string id = 1;
+  string name = 2;
+  string contact_info = 3;
+}
+
+enum StockMovementType {
+  ADDITION = 0;
+  REMOVAL = 1;
+  TRANSFER = 2;
+}
+
+message StockMovement {
+  string id = 1;
+  string inventory_item_id = 2;
+  StockMovementType type = 3;
+  int32 quantity = 4;
+  google.protobuf.Timestamp date = 5;
+  string source_warehouse_id = 6;
+  string destination_warehouse_id = 7;
+}
+
+service InventoryService {
+  rpc CreateProduct(CreateProductRequest) returns (Product);
+  rpc GetProduct(GetProductRequest) returns (Product);
+  rpc UpdateProduct(UpdateProductRequest) returns (Product);
+  rpc DeleteProduct(DeleteProductRequest) returns (google.protobuf.Empty);
+
+  rpc CreateCategory(CreateCategoryRequest) returns (Category);
+  rpc GetCategory(GetCategoryRequest) returns (Category);
+  rpc UpdateCategory(UpdateCategoryRequest) returns (Category);
+  rpc DeleteCategory(DeleteCategoryRequest) returns (google.protobuf.Empty);
+
+  rpc CreateInventoryItem(CreateInventoryItemRequest) returns (InventoryItem);
+  rpc GetInventoryItem(GetInventoryItemRequest) returns (InventoryItem);
+  rpc UpdateInventoryItem(UpdateInventoryItemRequest) returns (InventoryItem);
+  rpc DeleteInventoryItem(DeleteInventoryItemRequest) returns (google.protobuf.Empty);
+
+  rpc CreateWarehouse(CreateWarehouseRequest) returns (Warehouse);
+  rpc GetWarehouse(GetWarehouseRequest) returns (Warehouse);
+  rpc UpdateWarehouse(UpdateWarehouseRequest) returns (Warehouse);
+  rpc DeleteWarehouse(DeleteWarehouseRequest) returns (google.protobuf.Empty);
+
+  rpc CreateSupplier(CreateSupplierRequest) returns (Supplier);
+  rpc GetSupplier(GetSupplierRequest) returns (Supplier);
+  rpc UpdateSupplier(UpdateSupplierRequest) returns (Supplier);
+  rpc DeleteSupplier(DeleteSupplierRequest) returns (google.protobuf.Empty);
+
+  rpc CreateStockMovement(CreateStockMovementRequest) returns (StockMovement);
+  rpc GetStockMovement(GetStockMovementRequest) returns (StockMovement);
+  rpc UpdateStockMovement(UpdateStockMovementRequest) returns (StockMovement);
+  rpc DeleteStockMovement(DeleteStockMovementRequest) returns (google.protobuf.Empty);
+
+  rpc ListProducts(ListProductsRequest) returns (ListProductsResponse);
+  rpc ListCategories(ListCategoriesRequest) returns (ListCategoriesResponse);
+  rpc ListInventoryItems(ListInventoryItemsRequest) returns (ListInventoryItemsResponse);
+  rpc ListWarehouses(ListWarehousesRequest) returns (ListWarehousesResponse);
+  rpc ListSuppliers(ListSuppliersRequest) returns (ListSuppliersResponse);
+  rpc ListStockMovements(ListStockMovementsRequest) returns (ListStockMovementsResponse);
+}
+
+message CreateProductRequest {
+  Product product = 1;
+}
+
+message GetProductRequest {
+  string id = 1;
+}
+
+message UpdateProductRequest {
+  Product product = 1;
+}
+
+message DeleteProductRequest {
+  string id = 1;
+}
+
+message CreateCategoryRequest {
+  Category category = 1;
+}
+
+message GetCategoryRequest {
+  string id = 1;
+}
+
+message UpdateCategoryRequest {
+  Category category = 1;
+}
+
+message DeleteCategoryRequest {
+  string id = 1;
+}
+
+message CreateInventoryItemRequest {
+  InventoryItem inventory_item = 1;
+}
+
+message GetInventoryItemRequest {
+  string id = 1;
+}
+
+message UpdateInventoryItemRequest {
+  InventoryItem inventory_item = 1;
+}
+
+message DeleteInventoryItemRequest {
+  string id = 1;
+}
+
+message CreateWarehouseRequest {
+  Warehouse warehouse = 1;
+}
+
+message GetWarehouseRequest {
+  string id = 1;
+}
+
+message UpdateWarehouseRequest {
+  Warehouse warehouse = 1;
+}
+
+message DeleteWarehouseRequest {
+  string id = 1;
+}
+
+message CreateSupplierRequest {
+  Supplier supplier = 1;
+}
+
+message GetSupplierRequest {
+  string id = 1;
+}
+
+message UpdateSupplierRequest {
+  Supplier supplier = 1;
+}
+
+message DeleteSupplierRequest {
+  string id = 1;
+}
+
+message CreateStockMovementRequest {
+  StockMovement stock_movement = 1;
+}
+
+message GetStockMovementRequest {
+  string id = 1;
+}
+
+message UpdateStockMovementRequest {
+  StockMovement stock_movement = 1;
+}
+
+message DeleteStockMovementRequest {
+  string id = 1;
+}
+
+message ListProductsRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+}
+
+message ListProductsResponse {
+  repeated Product products = 1;
+  int32 total = 2;
+}
+
+message ListCategoriesRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+}
+
+message ListCategoriesResponse {
+  repeated Category categories = 1;
+  int32 total = 2;
+}
+
+message ListInventoryItemsRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+}
+
+message ListInventoryItemsResponse {
+  repeated InventoryItem inventory_items = 1;
+  int32 total = 2;
+}
+
+message ListWarehousesRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+}
+
+message ListWarehousesResponse {
+  repeated Warehouse warehouses = 1;
+  int32 total = 2;
+}
+
+message ListSuppliersRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+}
+
+message ListSuppliersResponse {
+  repeated Supplier suppliers = 1;
+  int32 total = 2;
+}
+
+message ListStockMovementsRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+}
+
+message ListStockMovementsResponse {
+  repeated StockMovement stock_movements = 1;
+  int32 total = 2;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//  rpc GetInventoryItemStock(GetInventoryItemStockRequest) returns (GetInventoryItemStockResponse);
+//  rpc GetWarehouseStock(GetWarehouseStockRequest) returns (GetWarehouseStockResponse);
+//  rpc GetProductStock(GetProductStockRequest) returns (GetProductStockResponse);
+//
+//  rpc GetInventoryItemStockHistory(GetInventoryItemStockHistoryRequest) returns (GetInventoryItemStockHistoryResponse);
+//  rpc GetWarehouseStockHistory(GetWarehouseStockHistoryRequest) returns (GetWarehouseStockHistoryResponse);
+//  rpc GetProductStockHistory(GetProductStockHistoryRequest) returns (GetProductStockHistoryResponse);
+//
+//  rpc GetInventoryItemStockMovements(GetInventoryItemStockMovementsRequest) returns (GetInventoryItemStockMovementsResponse);
+//  rpc GetWarehouseStockMovements(GetWarehouseStockMovementsRequest) returns (GetWarehouseStockMovementsResponse);
+//  rpc GetProductStockMovements(GetProductStockMovementsRequest) returns (GetProductStockMovementsResponse);
+//
+//  rpc GetInventoryItemStockMovementsByType(GetInventoryItemStockMovementsByTypeRequest) returns (GetInventoryItemStockMovementsByTypeResponse);
+//  rpc GetWarehouseStockMovementsByType(GetWarehouseStockMovementsByTypeRequest) returns (GetWarehouseStockMovementsByTypeResponse);
+//  rpc GetProductStockMovementsByType(GetProductStockMovementsByTypeRequest) returns (GetProductStockMovementsByTypeResponse);
+//
+//  rpc GetInventoryItemStockMovementsByDate(GetInventoryItemStockMovementsByDateRequest) returns (GetInventoryItemStockMovementsByDateResponse);
+//  rpc GetWarehouseStockMovementsByDate(GetWarehouseStockMovementsByDateRequest) returns (GetWarehouseStockMovementsByDateResponse);
+//  rpc GetProductStockMovementsByDate(GetProductStockMovementsByDateRequest) returns (GetProductStockMovementsByDateResponse);
+//
+//  rpc GetInventoryItemStockMovementsByDateRange(GetInventoryItemStockMovementsByDateRangeRequest) returns (GetInventoryItemStockMovementsByDateRangeResponse);
+//  rpc GetWarehouseStockMovementsByDateRange(GetWarehouseStockMovementsByDateRangeRequest) returns (GetWarehouseStockMovementsByDateRangeResponse);
+//  rpc GetProductStockMovementsByDateRange(GetProductStockMovementsByDateRangeRequest) returns (GetProductStockMovementsByDateRangeResponse);
